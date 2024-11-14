@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <h1>CALCULATORS</h1>
+    </header>
+
+    <div class="calculator-container">
+        
+        <div class="calculator-tabs">
+            <button class="tab active" onclick="openTab('sip')">SIP</button>
+            <button class="tab" onclick="openTab('lumpsum')">LUMPSUM</button>
+            <button class="tab" onclick="openTab('fd')">FD</button>
+            <button class="tab" onclick="openTab('rd')">RD</button>
+        </div>
+
+        <div class="calculator-content">
+
+            <!-- SIP -->
+            <div id="sip" class="tab-content active">
+                <div class="value-container">
+                    <div class="input-container">
+                        <div>
+                            <label>MONTHLY INVESTMENT</label>
+                            <input type="number" id="sipMonthlyInvestmentDirect" min="1000" max="50000" step="500"
+                                value="25000" oninput="updateSlider('sipMonthlyInvestment')">
+                        </div>
+                        <input type="range" id="sipMonthlyInvestment" min="1000" max="50000" step="500" value="25000"
+                            oninput="updateValue('sipMonthlyInvestment')">
+                        <span id="sipMonthlyInvestmentValue" hidden>₹25,000</span>
+                    </div>
+                    <div class="input-container">
+                        <div>
+                            <label>EXPECTED RETURN RATE (P.A)</label>
+
+                            <input type="number" id="sipExpectedReturnDirect" min="5" max="20" step="0.1" value="12"
+                                oninput="updateSlider('sipExpectedReturn')">
+                        </div>
+                        <input type="range" id="sipExpectedReturn" min="5" max="20" step="0.1" value="12"
+                            oninput="updateValue('sipExpectedReturn')">
+                        <span id="sipExpectedReturnValue" hidden>12%</span>
+                    </div>
+                    <div class="input-container">
+                        <div>
+                            <label>TIME PERIOD</label>
+                            <input type="number" id="sipTimePeriodDirect" min="1" max="30" step="1" value="10"
+                                oninput="updateSlider('sipTimePeriod')" aria-placeholder="€">
+                        </div>
+                        <input type="range" id="sipTimePeriod" min="1" max="30" step="1" value="10"
+                            oninput="updateValue('sipTimePeriod')">
+                        <span id="sipTimePeriodValue" hidden>10 Y</span>
+                    </div>
+                    <div class="results">
+                        <div class="results-content">INVESTED AMOUNT:<div class="results-txt" id="sipInvestedAmount">
+                                ₹3,000,000</div>
+                        </div>
+                        <div class="results-content">EST. RETURNS:<div class="results-txt" id="sipEstimatedReturn">
+                                ₹6,317,544.625</div>
+                        </div>
+                        <div class="results-content">TOTAL VALUE:<div class="results-txt" id="sipTotalValue">
+                                ₹9,317,544.625</div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-container-content">
+                        <div id="chart-container-content-1" class="chart-container-content-item">
+                            <div id="chart-container-content-circle-1"></div>
+                            <div>EST. RETURN</div>
+                        </div>
+                        <div id="chart-container-content-2" class="chart-container-content-item">
+                            <div id="chart-container-content-circle-2"></div>
+                            <div>INVESTED AMOUNT</div>
+                        </div>
+                    </div>
+                    <div class="donut-chart"></div>
+                    <div><button class="invest-now">INVEST NOW</button></div>
+                </div>
+            </div>
+
+            <!-- Lumpsum -->
+            <div id="lumpsum" class="tab-content">
+                <div class="value-container">
+                    <div class="input-container">
+                        <div>
+                            <label>INVESTMENT AMOUNT</label>
+                            <input type="number" id="lumpsumInvestmentDirect" min="10000" max="1000000" step="10000"
+                                value="500000" oninput="updateSlider('lumpsumInvestment')">
+                        </div>
+                        <input type="range" id="lumpsumInvestment" min="10000" max="1000000" step="10000" value="500000"
+                            oninput="updateValue('lumpsumInvestment')">
+                        <span id="lumpsumInvestmentValue" hidden>₹5,00,000</span>
+                    </div>
+                    <div class="input-container">
+                        <div>
+                            <label>EXPECTED RETURN RATE (P.A)</label>
+                            <input type="number" id="lumpsumExpectedReturnDirect" min="5" max="20" step="0.1" value="12"
+                                oninput="updateSlider('lumpsumExpectedReturn')">
+                        </div>
+                        <input type="range" id="lumpsumExpectedReturn" min="5" max="20" step="0.1" value="12"
+                            oninput="updateValue('lumpsumExpectedReturn')">
+                        <span id="lumpsumExpectedReturnValue" hidden>12%</span>
+                    </div>
+                    <div class="input-container">
+                        <div>
+                            <label>TIME PERIOD</label>
+                            <input type="number" id="lumpsumTimePeriodDirect" min="1" max="30" step="1" value="10"
+                                oninput="updateSlider('lumpsumTimePeriod')">
+                        </div>
+                        <input type="range" id="lumpsumTimePeriod" min="1" max="30" step="1" value="10"
+                            oninput="updateValue('lumpsumTimePeriod')">
+                        <span id="lumpsumTimePeriodValue" hidden>10 Y</span>
+                    </div>
+                    <div class="results">
+                        <div class="results-content">INVESTED AMOUNT:<div class="results-txt"
+                                id="lumpsumInvestedAmount">₹500,000</div>
+                        </div>
+                        <div class="results-content">EST. RETURNS:<div class="results-txt" id="lumpsumEstimatedReturn">
+                                ₹1,052,924.104</div>
+                        </div>
+                        <div class="results-content">TOTAL VALUE:<div class="results-txt" id="lumpsumTotalValue">
+                                ₹1,552,924.104</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-container-content">
+                        <div id="chart-container-content-1" class="chart-container-content-item">
+                            <div id="chart-container-content-circle-1"></div>
+                            <div>EST. RETURN</div>
+                        </div>
+                        <div id="chart-container-content-2" class="chart-container-content-item">
+                            <div id="chart-container-content-circle-2"></div>
+                            <div>INVESTED AMOUNT</div>
+                        </div>
+                    </div>
+                    <div class="donut-chart"></div>
+                    <div><button class="invest-now">INVEST NOW</button></div>
+                </div>
+            </div>
+
+            <!-- FD -->
+            <div id="fd" class="tab-content">
+                <div class="value-container">
+                    <div class="input-container">
+                        <div>
+                            <label>DEPOSIT AMOUNT</label>
+                            <input type="number" id="fdDepositAmountDirect" min="10000" max="1000000" step="10000"
+                                value="500000" oninput="updateSlider('fdDepositAmount')">
+                        </div>
+                        <input type="range" id="fdDepositAmount" min="10000" max="1000000" step="10000" value="500000"
+                            oninput="updateValue('fdDepositAmount')">
+                        <span id="fdDepositAmountValue" hidden>₹5,00,000</span>
+                    </div>
+                    <div class="input-container">
+                        <div>
+                            <label>INTEREST RATE (P.A)</label>
+                            <input type="number" id="fdInterestRateDirect" min="5" max="10" step="0.1" value="7"
+                                oninput="updateSlider('fdInterestRate')">
+                        </div>
+                        <input type="range" id="fdInterestRate" min="5" max="10" step="0.1" value="7"
+                            oninput="updateValue('fdInterestRate')">
+                        <span id="fdInterestRateValue" hidden>7%</span>
+                    </div>
+                    <div class="input-container">
+                        <div>
+                            <label>TIME PERIOD</label>
+                            <input type="number" id="fdTimePeriodDirect" min="1" max="10" step="1" value="5"
+                                oninput="updateSlider('fdTimePeriod')">
+                        </div>
+                        <input type="range" id="fdTimePeriod" min="1" max="10" step="1" value="5"
+                            oninput="updateValue('fdTimePeriod')">
+                        <span id="fdTimePeriodValue" hidden>5 Y</span>
+                    </div>
+                    <div class="results">
+                        <div class="results-content">INVESTED AMOUNT:<div class="results-txt" id="fdInvestedAmount">
+                                ₹500,000</div>
+                        </div>
+                        <div class="results-content">INTEREST EARNED:<div class="results-txt" id="fdInterestEarned">
+                                ₹250,000</div>
+                        </div>
+                        <div class="results-content">TOTAL VALUE:<div class="results-txt" id="fdTotalValue">₹750,000
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-container-content">
+                        <div id="chart-container-content-1" class="chart-container-content-item">
+                            <div id="chart-container-content-circle-1"></div>
+                            <div>INTEREST EARNED</div>
+                        </div>
+                        <div id="chart-container-content-2" class="chart-container-content-item">
+                            <div id="chart-container-content-circle-2"></div>
+                            <div>INVESTED AMOUNT</div>
+                        </div>
+                    </div>
+                    <div class="donut-chart"></div>
+                    <div><button class="invest-now">INVEST NOW</button></div>
+                </div>
+            </div>
+
+            <!-- RD -->
+            <div id="rd" class="tab-content">
+                <div class="value-container">
+                    <div class="input-container">
+                        <div>
+                            <label>MONTHLY DEPOSIT</label>
+                            <input type="number" id="rdMonthlyDepositDirect" min="1000" max="50000" step="500"
+                                value="10000" oninput="updateSlider('rdMonthlyDeposit')">
+                        </div>
+                        <input type="range" id="rdMonthlyDeposit" min="1000" max="50000" step="500" value="10000"
+                            oninput="updateValue('rdMonthlyDeposit')">
+                        <span id="rdMonthlyDepositValue" hidden>₹10,000</span>
+                    </div>
+                    <div class="input-container">
+                        <div>
+                            <label>INTEREST RATE (P.A)</label>
+                            <input type="number" id="rdInterestRateDirect" min="5" max="10" step="0.1" value="7"
+                                oninput="updateSlider('rdInterestRate')">
+                        </div>
+                        <input type="range" id="rdInterestRate" min="5" max="10" step="0.1" value="7"
+                            oninput="updateValue('rdInterestRate')">
+                        <span id="rdInterestRateValue" hidden>7%</span>
+                    </div>
+                    <div class="input-container">
+                        <div>
+                            <label>TIME PERIOD</label>
+                            <input type="number" id="rdTimePeriodDirect" min="1" max="10" step="1" value="5"
+                                oninput="updateSlider('rdTimePeriod')">
+                        </div>
+                        <input type="range" id="rdTimePeriod" min="1" max="10" step="1" value="5"
+                            oninput="updateValue('rdTimePeriod')">
+                        <span id="rdTimePeriodValue" hidden>5 Y</span>
+                    </div>
+                    <div class="results">
+                        <div class="results-content">INVESTED AMOUNT:<div class="results-txt" id="rdInvestedAmount">
+                                ₹600,000</div>
+                        </div>
+                        <div class="results-content">INTEREST EARNED:<div class="results-txt" id="rdInterestEarned">
+                                ₹200,000</div>
+                        </div>
+                        <div class="results-content">TOTAL VALUE:<div class="results-txt" id="rdTotalValue">₹800,000
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-container-content">
+                        <div id="chart-container-content-1" class="chart-container-content-item">
+                            <div id="chart-container-content-circle-1"></div>
+                            <div>INTEREST EARNED</div>
+                        </div>
+                        <div id="chart-container-content-2" class="chart-container-content-item">
+                            <div id="chart-container-content-circle-2"></div>
+                            <div>INVESTED AMOUNT</div>
+                        </div>
+                    </div>
+                    <div class="donut-chart"></div>
+                    <div><button class="invest-now">INVEST NOW</button></div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
