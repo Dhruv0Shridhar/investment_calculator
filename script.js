@@ -1,5 +1,5 @@
 // Shared state for all tabs
-let sharedValues = {
+var sharedValues = {
     sipMonthlyInvestment: 25000,
     sipExpectedReturn: 12,
     sipTimePeriod: 10,
@@ -14,8 +14,7 @@ let sharedValues = {
     rdTimePeriod: 5,
 };
 
-
-let currentTab = 'sip';
+var currentTab = 'sip';
 
 // Tab switching function
 function openTab(tabName) {
@@ -47,8 +46,8 @@ function calculateValues() {
 }
 
 // Function to update donut chart
-function updateDonutChart(investedPercentage) {
-    document.querySelector('.donut-chart').style.background = `conic-gradient(
+function updateDonutChart(type, investedPercentage) {
+    document.querySelector("#"+type+"  .donut-chart").style.background = `conic-gradient(
         #1C3E3E 0% ${investedPercentage}%,   /* Dark section for Invested Amount */
         #00FF97 ${investedPercentage}% 100%  /* Light section for Estimated Return */
     )`;
@@ -73,7 +72,7 @@ function calculateSIP() {
 
     // Update donut chart with SIP values
     const investedPercentage = (investedAmount / futureValue) * 100;
-    updateDonutChart(investedPercentage);
+    updateDonutChart('sip', investedPercentage);
 }
 
 // Similar functions for Lumpsum, FD, and RD
@@ -91,7 +90,7 @@ function calculateLumpsum() {
     lumpsumTotalValue.textContent = `₹${futureValue.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
 
     const investedPercentage = (investedAmount / futureValue) * 100;
-    updateDonutChart(investedPercentage);
+    updateDonutChart('lumpsum', investedPercentage);
 }
 
 // Event listeners for inputs (optimized to call calculateValues)
@@ -161,11 +160,11 @@ function calculateFD() {
     const estimatedReturn = futureValue - investedAmount;
 
     fdInvestedAmount.textContent = `₹${investedAmount.toLocaleString('en-IN')}`;
-    fdEstimatedReturn.textContent = `₹${estimatedReturn.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
+    fdInterestEarned.textContent = `₹${estimatedReturn.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
     fdTotalValue.textContent = `₹${futureValue.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
 
     const investedPercentage = (investedAmount / futureValue) * 100;
-    updateDonutChart(investedPercentage);
+    updateDonutChart('fd', investedPercentage);
 }
 
 // Calculate RD values
@@ -181,11 +180,11 @@ function calculateRD() {
     const estimatedReturn = futureValue - investedAmount;
 
     rdInvestedAmount.textContent = `₹${investedAmount.toLocaleString('en-IN')}`;
-    rdEstimatedReturn.textContent = `₹${estimatedReturn.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
+    rdInterestEarned.textContent = `₹${estimatedReturn.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
     rdTotalValue.textContent = `₹${futureValue.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
 
     const investedPercentage = (investedAmount / futureValue) * 100;
-    updateDonutChart(investedPercentage);
+    updateDonutChart('rd', investedPercentage);
 }
 
 // Initialize values on page load
